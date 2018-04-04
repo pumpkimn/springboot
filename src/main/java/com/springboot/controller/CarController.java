@@ -5,31 +5,55 @@ import com.springboot.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * @author lee
  *  控制层
  */
-@RestController
-@RequestMapping("/api")
+/*@RestController
+@RequestMapping("/api")*/
+@Controller
 public class CarController {
     @Autowired
     private CarService carService ;
 
-    @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public ResponseEntity<?> carList(){
+   // @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @GetMapping("carlist")
+    public ModelAndView carList(){
         CustomType customType = new CustomType(400,"查询不到");
-        List<Car> list = carService.list();
-        if (list != null){
-            customType.setCode(200);
-            customType.setMessage("查询以下数据"+list);
-        }
-        return new ResponseEntity<>(customType, HttpStatus.OK);
+        List<Car> cars = carService.list();
+        ModelAndView mv = new ModelAndView();
+                mv.setViewName("carlist");
+                mv.addObject("cars",cars);
+
+                Car car = new Car();
+                car.setId(5);
+                car.setName("vovo");
+                car.setCreateDate(new Date());
+                car.setPrice(55558d);
+        mv.addObject("car",car);
+        return mv;
+    }
+
+
+    //http://127.0.0.1:8086/hithymeleaf
+    //http://127.0.0.1:8086/hithymeleaf?name=lee
+    @RequestMapping("hithymeleaf")
+    public String himThyeleaf(
+            @RequestParam(value = "name",required = false,defaultValue = "world") String name, Model model
+    ){
+        //模型数据
+        model.addAttribute("name",name);
+        //试图(resoureces 下的模板中的html：hello.html)
+        // 转发到页面 hello.html3
+        return "hello";
     }
 
 }
