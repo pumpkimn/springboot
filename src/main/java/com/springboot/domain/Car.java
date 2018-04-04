@@ -1,4 +1,4 @@
-package com.springboot.pojo;
+package com.springboot.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -12,6 +12,7 @@ import java.util.Date;
 public class Car implements Serializable {
     private static final long serialVersionUID = -5821651550212075426L;
 
+    private Integer id;
     private String name;
     private Double price;
     /* 时间转换 json 加上时区*/
@@ -21,7 +22,8 @@ public class Car implements Serializable {
     public Car() {
     }
 
-    public Car(String name, Double price, Date createDate) {
+    public Car(Integer id, String name, Double price, Date createDate) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.createDate = createDate;
@@ -29,6 +31,14 @@ public class Car implements Serializable {
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -58,7 +68,8 @@ public class Car implements Serializable {
     @Override
     public String toString() {
         return "Car{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", price=" + price +
                 ", createDate=" + createDate +
                 '}';
