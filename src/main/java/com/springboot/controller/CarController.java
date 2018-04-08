@@ -15,10 +15,11 @@ import java.util.List;
 
 /**
  * @author lee
- *  控制层
+ *  控制层  跳转版本
  */
 /*@RestController
 @RequestMapping("/api")*/
+@SessionAttributes(types = {String.class},names = {"car","cars"})
 @Controller
 public class CarController {
     @Autowired
