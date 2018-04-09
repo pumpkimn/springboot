@@ -54,7 +54,6 @@
    <p style="color: red" th:text="|session:${session.car.name} request:${car.name}|"></p>
     <tr th:each="car:${session.cars}">
         <td th:text="${car.name}"></td>
-        <td></td>
     </tr>
 
     <ul th:each="car:${cars}">
